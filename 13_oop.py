@@ -76,3 +76,37 @@ sandra = Human('Sandra Bullok', Human.SEX_FEMALE)
 print(sandra.__dict__)
 john.marry(sandra)
 print(john.__dict__, sandra.__dict__)
+
+
+##
+## Магические методы
+##
+class MagicTest:
+    def __call__(self, message):
+        """__call__(self[, args...]) позволяет любому экземпляру класса вести себя как обычная функция"""
+        print(message)
+        return True
+
+    def __enter__(self):
+        """__enter__(self) — определяет начало блока контекстного менеджера, вызванного с помощью with"""
+        print("entering context")
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        """
+        __exit__(self, exc_type, exc_value, traceback) — определяет конец блока контекстного менеджера. 
+        Может использоваться для контролирования исключений, очистки, или любых действий, 
+        которые должны быть выполнены после блока внутри with.
+        """
+        print("exiting context")
+
+    def __getitem__(self, key):
+        print(key)
+        return 10
+
+test = MagicTest()
+test("Hello World")
+test[10:20:"*"]
+
+with MagicTest() as mt:
+    print(mt)
